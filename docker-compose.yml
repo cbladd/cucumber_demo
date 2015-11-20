@@ -1,0 +1,33 @@
+codecontainer: # ARM VM that exists just to have the volume.
+  image: busybox
+  volumes:
+    - ./:/data
+
+ruby_test_runner:
+  build: . 
+
+  links:
+    - selenium_hub:hub
+  command: /bin/sh -c "while true; do sleep 1; done"
+  volumes_from:
+    - codecontainer
+
+selenium_hub:
+  image: selenium/hub
+  ports:
+    - 4444:4444
+
+selenium_chrome:
+  image: selenium/node-chrome
+  links:
+    - selenium_hub:hub
+
+selenium_firefox:
+  image: selenium/node-firefox
+  links:
+    - selenium_hub:hub
+
+# jenkins:
+#   image: jenkins
+#   ports:
+#     - 8080:8080
