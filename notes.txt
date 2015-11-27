@@ -8,3 +8,6 @@ Dockerfile  docker-compose.yml	yesmail_app.rb
 root@790e5c35e9ef:/data# ruby yesmail_app.rb
 hello world
 root@790e5c35e9ef:/data#
+
+
+docker kill $(docker  ps -aq); docker rm $(docker ps -ap)

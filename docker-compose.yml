@@ -2,9 +2,11 @@ codecontainer: # ARM VM that exists just to have the volume.
   image: busybox
   volumes:
     - ./:/data
+  links:
+    - jenkins:jenkins
 
 ruby_test_runner:
-  build: . 
+  build: .
 
   links:
     - selenium_hub:hub
@@ -17,17 +19,17 @@ selenium_hub:
   ports:
     - 4444:4444
 
-selenium_chrome:
-  image: selenium/node-chrome
-  links:
-    - selenium_hub:hub
-
 selenium_firefox:
   image: selenium/node-firefox
   links:
     - selenium_hub:hub
 
-# jenkins:
-#   image: jenkins
-#   ports:
-#     - 8080:8080
+jenkins:
+  image: jenkins
+  ports:
+    - 8080:8080
+
+# selenium_chrome:
+#   image: selenium/node-chrome
+#   links:
+#     - selenium_hub:hub

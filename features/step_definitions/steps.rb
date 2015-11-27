@@ -8,6 +8,7 @@ class Driver
     @wait = Selenium::WebDriver::Wait.new(:timeout => 10)
   end # initialize
 
+
   def setup(d)
     @driverType = d
     @driver = Selenium::WebDriver.for(
@@ -20,6 +21,8 @@ class Driver
   def teardown
     @driver.quit
   end
+
+
   def open_gmail_inbox
     @driver.get "https://accounts.google.com/ServiceLogin?service=mail&continue=https://mail.google.com/mail/#identifier"
     @element = @driver.find_element(:css, "input#Email")
@@ -36,8 +39,9 @@ class Driver
     puts @driver.title
   end
 
+
   def read_first_email
-    @element = @wait.until {@driver.find_element(:css, "div.xT>div.y6:first-child")}
+    @element = @wait.until {@driver.find_element(:css, "div.xT > div.y6:first-child")}
     @element.click()
     @element = @wait.until {@driver.find_element(:css, "div.asa > div.ar6")}
     @src = @driver.page_source
@@ -47,17 +51,7 @@ class Driver
     else
       return false
     end
-    # @text_found
   end
-
-  def run
-    setup
-    open_gmail_inbox
-    read_first_email
-    # yield
-    teardown
-  end  # run
-
 end  #Driver
 
 myDriver = Driver.new("yesmailapptest@gmail.com", "Thisistheyesmailappaccount.")
